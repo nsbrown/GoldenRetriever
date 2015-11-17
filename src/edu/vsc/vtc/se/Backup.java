@@ -1,16 +1,31 @@
 package edu.vsc.vtc.se;
 
+import java.io.File;
+
 
 public class Backup
 {
-<<<<<<< HEAD
+	public static void main(String[] args)
+	{
+		String dir;
+		File filename;
+	}
+	Backup()
+	{
+		
+	}
 	
 	//Hey bitches
 	//Delete this whole thing, its a lie, we will need to do this again fuck!!!!!
-=======
-	public static void main(String[] args) {
-		System.out.println("Hello, world!");
-	}
->>>>>>> b669d6ff5c2e90715ad045bc711d1304201e697f
 }
+//this is not a test. this is a real comment. do not take it lightly
+
+// Testing out the cloning process. ~tp 
+
+//Trying just a git push
+
+
+//Trying just a git push
+
+//poops poops poops
 
