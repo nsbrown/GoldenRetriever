@@ -9,33 +9,11 @@ import java.nio.channels.FileChannel;
 
 
 /** 
- Copy files, using two techniques, FileChannels and streams.
  Using FileChannels is usually faster than using streams.
 */
 public final class backupItem 
 {
   
-
-  /** Run the example. 
-  public static void main(String [] aArgs) throws IOException
-  {
-	File folder = new File("C:\\Test1");
-	File[] listofFiles = folder.listFiles();
-	String directory = "E:\\Test1\\";
-	
-	if(listofFiles != null)
-	{
-		multipleFiles(listofFiles, directory);
-	}
-	if(listofFiles == null) //If specific file from folder, this will be used to copy
-	{
-		singleFile(folder, directory);
-	}
-	
-    OutPut("Done.");
-  }
-*/
-	
 	backupItem()
 	{
 	  
@@ -82,28 +60,18 @@ public final class backupItem
 				}
 				else if(listofFiles[i].isDirectory())
 				{
-					//OutPut("I am here due to there is a directory");
-					//listofFiles[i].getName();
-					//String fileDest = directory + listofFiles[i].getName();
-					//File source = new File(listofFiles[i].getPath());
-					//OutPut(listofFiles[i].getPath());
-					//OutPut(listofFiles[i].getName());
+				
 					File newSource = new File(listofFiles[i].getPath());
 					File[] listOfFiles = newSource.listFiles();
 					String newDest = directory + listofFiles[i].getName() + "\\";
 					new backupItem(newSource, listOfFiles, newDest);
 					OutPut(newSource);
 					OutPut(newDest);
-					//File destination = new File(fileDest);
-					//File[] listOfFiles= source.listFiles();
-					//backupItem test = new backupItem(source, listOfFiles, directory);
-					//backupItem test = new backupItem();
-					//test.copyWithChannels(source, destination, false);
-					
+		
 				}
 			}
 	  }
-	  private void copyWithChannels(File aSourceFile, File aTargetFile, boolean aAppend)
+	  private void copyWithChannels(File aSourceFile, File aTargetFile, boolean aAppend) //Borrowed Code - hit exactly what we needed, and was straight forward.
 	  {
 		    OutPut("Copying files with channels.");
 		    destDirExists(aTargetFile.getParentFile());
