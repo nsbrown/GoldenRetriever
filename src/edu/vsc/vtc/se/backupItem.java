@@ -75,18 +75,31 @@ public final class backupItem
 					String fileDest = directory + listofFiles[i].getName();
 					File source = new File(listofFiles[i].getPath());
 					File destination = new File(fileDest);
+					//OutPut(destination);
 					backupItem test = new backupItem();
 					test.copyWithChannels(source, destination, false);
 					//test.copyWithStreams(source, destination, false);
 				}
 				else if(listofFiles[i].isDirectory())
 				{
+					//OutPut("I am here due to there is a directory");
 					//listofFiles[i].getName();
-					String fileDest = directory + listofFiles[i].getName();
-					File source = new File(listofFiles[i].getPath());
-					File destination = new File(fileDest);
-					backupItem test = new backupItem();
-					test.copyWithChannels(source, destination, false);
+					//String fileDest = directory + listofFiles[i].getName();
+					//File source = new File(listofFiles[i].getPath());
+					//OutPut(listofFiles[i].getPath());
+					//OutPut(listofFiles[i].getName());
+					File newSource = new File(listofFiles[i].getPath());
+					File[] listOfFiles = newSource.listFiles();
+					String newDest = directory + listofFiles[i].getName() + "\\";
+					new backupItem(newSource, listOfFiles, newDest);
+					OutPut(newSource);
+					OutPut(newDest);
+					//File destination = new File(fileDest);
+					//File[] listOfFiles= source.listFiles();
+					//backupItem test = new backupItem(source, listOfFiles, directory);
+					//backupItem test = new backupItem();
+					//test.copyWithChannels(source, destination, false);
+					
 				}
 			}
 	  }
