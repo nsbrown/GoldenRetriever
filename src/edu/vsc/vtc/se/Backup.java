@@ -32,7 +32,7 @@ public class Backup
 		 	*/
 		 	File folder = new File("C:\\Test1");
 			File[] listofFiles = folder.listFiles();
-			String directory = "E:\\Test1\\";
+			String directory = "C:\\Testing\\";
 			
 			//backupItem newBackup = 
 			double start = System.nanoTime();

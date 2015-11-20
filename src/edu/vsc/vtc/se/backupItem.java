@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.channels.FileChannel;
 
 //Hey hey hey
@@ -37,9 +39,11 @@ public final class backupItem
   
 	  private static void singleFile(File folder, String directory)
 	  {
+		  	OutPut("size of file is: " + folder.length());
 		  	File dir = new File(directory + folder.getName());
 			backupItem test = new backupItem();
-			test.copyWithChannels(folder, dir, false);
+			test.copyWithChannels(folder, dir);//, false);
+			//test.copyWithStreams(folder, dir);
 	  }
 	  
 	  private static void multipleFiles(File[] listofFiles, String directory)
@@ -53,10 +57,12 @@ public final class backupItem
 					String fileDest = directory + listofFiles[i].getName();
 					File source = new File(listofFiles[i].getPath());
 					File destination = new File(fileDest);
+					OutPut("size of file is: " + source.length());
 					//OutPut(destination);
 					backupItem test = new backupItem();
-					test.copyWithChannels(source, destination, false);
+					test.copyWithChannels(source, destination);//, false);
 					//test.copyWithStreams(source, destination, false);
+					//test.copyWithStreams(source, destination);
 				}
 				else if(listofFiles[i].isDirectory())
 				{
@@ -71,49 +77,35 @@ public final class backupItem
 				}
 			}
 	  }
-	  private void copyWithChannels(File aSourceFile, File aTargetFile, boolean aAppend) //Borrowed Code - hit exactly what we needed, and was straight forward.
+	  private void copyWithChannels(File aSourceFile, File aTargetFile)//Borrowed Code - modified by Earl
 	  {
-		    OutPut("Copying files with channels.");
+		  OutPut("Copying files with channels.");
 		    destDirExists(aTargetFile.getParentFile());
 		    FileChannel inputChannel = null;
 		    FileChannel outputChannel = null;
-		    FileInputStream inStream = null;
-		    FileOutputStream outStream = null;
 		    try
 		    {
 		    	try 
 		    	{
-			        inStream = new FileInputStream(aSourceFile);
-			        inputChannel = inStream.getChannel();
-			        outStream = new  FileOutputStream(aTargetFile, aAppend);        
-			        outputChannel = outStream.getChannel();
-			        long bytesTransferred = 0;
-			        //defensive loop - there's usually only a single iteration :
-			        while(bytesTransferred < inputChannel.size())
-			        {
-			        	bytesTransferred += inputChannel.transferTo(0, inputChannel.size(), outputChannel);
-			        }
-		    	}
+			        inputChannel = new FileInputStream(aSourceFile).getChannel();
+			        OutPut("size of file in bytes is: " + inputChannel.size());
+			        outputChannel = new FileOutputStream(aTargetFile).getChannel();
+			        outputChannel.transferFrom(inputChannel, 0, inputChannel.size());
+			        OutPut("size of file after transfer in byte: " + outputChannel.size());
 		    	
+		    	}
 		    	finally 
 		    	{
-			        //being defensive about closing all channels and streams 
-			    	  if(inputChannel != null)
-			    	  {
-			    		  inputChannel.close();
-			    	  }
-			    	  if(outputChannel != null) 
-			    	  {
-			    		  outputChannel.close();
-			    	  }
-			    	  if(inStream != null)
-			    	  {
-			    		  inStream.close();
-			    	  }
-			    	  if(outStream != null)
-			    	  {
-			    		  outStream.close();
-			    	  }
+		    		if(inputChannel != null)
+		    		{
+		    			inputChannel.close();
+		    		}
+		    		if(outputChannel != null)
+		    		{
+		    			outputChannel.close();
+		    		}
+			    	
+			    	
 		    	}
 		    }
 		    catch (FileNotFoundException ex)
@@ -124,8 +116,9 @@ public final class backupItem
 		    {
 		    	OutPut(ex);
 		    }
-	 }
-	  
+		  
+	  }
+	 
 	  private void destDirExists(File targetDir) //If directory does not exist it creates it.
 	  {
 		  if(targetDir.exists() == false)
