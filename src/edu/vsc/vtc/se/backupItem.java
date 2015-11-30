@@ -117,8 +117,45 @@ public final class backupItem
 		    	OutPut(ex);
 		    }
 		  
-	  }
+	 }
 	 
+	  private void copyWithStreams(File aSourceFile, File aTargetFile)//Borrowed Code - modified by Earl
+	  {
+		    OutPut("Copying files with Streams.");
+		    destDirExists(aTargetFile.getParentFile());
+		    InputStream inputStream = null;
+		    OutputStream outputStream = null;
+		    try
+		    {
+		    	try 
+		    	{
+			        inputStream = new FileInputStream(aSourceFile);
+			        outputStream = new FileOutputStream(aTargetFile);
+			        byte[] buffer = new byte[1024];
+			        int bufferRead;
+			        while((bufferRead = inputStream.read(buffer)) > 0)
+			        {
+			        	outputStream.write(buffer, 0, bufferRead);
+			        }
+		    	
+		    	}
+		    	finally 
+		    	{
+			       
+			    	inputStream.close();
+			    	outputStream.close();
+		    	}
+		    }
+		    catch (FileNotFoundException ex)
+		    {
+		    	OutPut("File not found: " + ex);
+		    }
+		    catch (IOException ex)
+		    {
+		    	OutPut(ex);
+		    }
+		  
+	 }
 	  private void destDirExists(File targetDir) //If directory does not exist it creates it.
 	  {
 		  if(targetDir.exists() == false)
