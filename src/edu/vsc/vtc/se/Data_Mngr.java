@@ -13,15 +13,15 @@ import java.nio.channels.FileChannel;
 /** 
  Using FileChannels is usually faster than using streams.
 */
-public final class backupItem 
+public final class Data_Mngr 
 {
   
-	backupItem()
+	Data_Mngr()
 	{
 	  
 	}
 	
-	backupItem(File folder, File[] listofFiles, String directory)
+	Data_Mngr(File folder, File[] listofFiles, String directory)
 	{
 		
 		if(listofFiles != null)
@@ -41,7 +41,7 @@ public final class backupItem
 	  {
 		  	OutPut("size of file is: " + folder.length());
 		  	File dir = new File(directory + folder.getName());
-			backupItem test = new backupItem();
+			Data_Mngr test = new Data_Mngr();
 			test.copyWithChannels(folder, dir);//, false);
 			//test.copyWithStreams(folder, dir);
 	  }
@@ -59,7 +59,7 @@ public final class backupItem
 					File destination = new File(fileDest);
 					OutPut("size of file is: " + source.length());
 					//OutPut(destination);
-					backupItem test = new backupItem();
+					Data_Mngr test = new Data_Mngr();
 					test.copyWithChannels(source, destination);//, false);
 					//test.copyWithStreams(source, destination, false);
 					//test.copyWithStreams(source, destination);
@@ -70,7 +70,7 @@ public final class backupItem
 					File newSource = new File(listofFiles[i].getPath());
 					File[] listOfFiles = newSource.listFiles();
 					String newDest = directory + listofFiles[i].getName() + "\\";
-					new backupItem(newSource, listOfFiles, newDest);
+					new Data_Mngr(newSource, listOfFiles, newDest);
 					OutPut(newSource);
 					OutPut(newDest);
 		

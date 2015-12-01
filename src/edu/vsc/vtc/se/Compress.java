@@ -10,9 +10,9 @@ import java.io.OutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-public class CompBackup 
+public class Compress 
 {
-	public CompBackup(File folder, String directory) 
+	public Compress(File folder, String directory) 
 	{
 		copyWithZip(folder, directory);
 	}

@@ -1,6 +1,6 @@
 package edu.vsc.vtc.se;
 
-import java.io.File;
+import java.io.File; 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +38,7 @@ public class Backup
 			//backupItem newBackup = 
 			double start = System.nanoTime();
 			//new backupItem(folder, listofFiles, directory);
-			new CompBackup(folder, directory);
+			new Compress(folder, directory);
 			System.out.println("Time to Copy in seconds = " + ((System.nanoTime() - start))/1000000000);
 
 	  }
