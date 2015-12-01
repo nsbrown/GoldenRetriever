@@ -31,13 +31,14 @@ public class Backup
 		 	
 		 	*/
 		 
-		 	File folder = new File("C:\\Test1");
-			File[] listofFiles = folder.listFiles();
-			String directory = "C:\\Testing\\";
+		 	File folder = new File("C:\\Test1\\Test1.txt");
+			//File[] listofFiles = folder.listFiles();
+			String directory = "C:\\Test1\\Test1.zip";
 			
 			//backupItem newBackup = 
 			double start = System.nanoTime();
-			new backupItem(folder, listofFiles, directory);
+			//new backupItem(folder, listofFiles, directory);
+			new CompBackup(folder, directory);
 			System.out.println("Time to Copy in seconds = " + ((System.nanoTime() - start))/1000000000);
 
 	  }
