@@ -17,7 +17,10 @@ public class Compress
 		copyWithZip(folder, directory);
 	}
 	
-	
+	private void comppressFile()
+	{
+		
+	}
 	private void copyWithZip(File aSourceFile, String aTargetFile)//Borrowed Code - modified by Earl
 	  {
 		    OutPut("Compressing Files.");
