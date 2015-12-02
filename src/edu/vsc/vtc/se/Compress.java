@@ -7,6 +7,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.zip.DeflaterOutputStream;
+import java.util.zip.InflaterInputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -17,9 +19,85 @@ public class Compress
 		copyWithZip(folder, directory);
 	}
 	
-	private void comppressFile()
+	private void comppressFile(File aSourceFile, String aTargetFile)
 	{
+		FileInputStream sourceFile = null;
+		FileOutputStream targetFile = null;
+		DeflaterOutputStream fileOut = null;
 		
+		 try
+		    {
+		    	try 
+		    	{
+		    		sourceFile = new FileInputStream(aSourceFile);
+		    		targetFile = new FileOutputStream(aTargetFile);
+		    		fileOut    = new DeflaterOutputStream(targetFile);
+		    		
+			        byte[] buffer = new byte[1024];
+			        int bufferRead;
+			        while((bufferRead = sourceFile.read(buffer)) > 0)
+			        {
+			        	fileOut.write(buffer, 0, bufferRead);
+			        	fileOut.flush();
+			        }
+		    	
+		    	}
+		    	finally 
+		    	{
+		    		sourceFile.close();
+		    		//targetFile.close();
+		    		fileOut.close();
+		    	}
+		    }
+		    catch (FileNotFoundException ex)
+		    {
+		    	OutPut("File not found: " + ex);
+		    }
+		    catch (IOException ex)
+		    {
+		    	OutPut(ex);
+		    }
+		 
+	}
+	
+	private void decompressFile(File aSourceFile, String aTargetFile)
+	{
+		FileInputStream sourceFile = null;
+		FileOutputStream targetFile = null;
+		InflaterInputStream fileIn = null;
+		
+		 try
+		    {
+		    	try 
+		    	{
+		    		sourceFile = new FileInputStream(aSourceFile);
+		    		targetFile = new FileOutputStream(aTargetFile);
+		    		fileIn    = new InflaterInputStream(sourceFile);
+		    		
+			        byte[] buffer = new byte[1024];
+			        int bufferRead;
+			        while((bufferRead = sourceFile.read(buffer)) > 0)
+			        {
+			        	targetFile.write(buffer, 0, bufferRead);
+			        	targetFile.flush();
+			        }
+		    	
+		    	}
+		    	finally 
+		    	{
+		    		sourceFile.close();
+		    		fileIn.close();
+		    		targetFile.close();
+		    	}
+		    }
+		    catch (FileNotFoundException ex)
+		    {
+		    	OutPut("File not found: " + ex);
+		    }
+		    catch (IOException ex)
+		    {
+		    	OutPut(ex);
+		    }
 	}
 	private void copyWithZip(File aSourceFile, String aTargetFile)//Borrowed Code - modified by Earl
 	  {
