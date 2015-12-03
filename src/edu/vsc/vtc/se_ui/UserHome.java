@@ -14,6 +14,7 @@ import java.awt.event.MouseEvent;
 public class UserHome extends JFrame {
 
 	private JPanel contentPane;
+	private FileChooser fileChooser = new FileChooser();
 
 	/**
 	 * Launch the application.
@@ -49,7 +50,7 @@ public class UserHome extends JFrame {
 		btnSelectFiles.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				JFileChooser fileSelector = new JFileChooser();
+				fileChooser.setVisible(true);
 			}
 		});
 		panel.add(btnSelectFiles);

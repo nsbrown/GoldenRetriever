@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+
 import java.io.IOException;
+
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.channels.FileChannel;
@@ -21,16 +23,16 @@ public final class Data_Mngr
 	  
 	}
 	
-	Data_Mngr(File folder, File[] listofFiles, String directory)
+	Data_Mngr(File sourceFile, File[] listofFiles, String targetFile)
 	{
 		
 		if(listofFiles != null)
 		{
-			multipleFiles(listofFiles, directory);
+			multipleFiles(listofFiles, targetFile);
 		}
 		if(listofFiles == null) //If a specific file from folder, this will be used to copy
 		{
-			singleFile(folder, directory);
+			singleFile(sourceFile, targetFile);
 		}
 		
 	    OutPut("Done.");
@@ -42,7 +44,7 @@ public final class Data_Mngr
 		  	OutPut("size of file is: " + folder.length());
 		  	File dir = new File(directory + folder.getName());
 			Data_Mngr test = new Data_Mngr();
-			test.copyWithChannels(folder, dir);//, false);
+			test.copyWithChannels(folder, dir);
 			//test.copyWithStreams(folder, dir);
 	  }
 	  
@@ -52,24 +54,21 @@ public final class Data_Mngr
 			{
 				if(listofFiles[i].isFile())
 				{
-					//String fileName = listofFiles[i].getName();
 					
 					String fileDest = directory + listofFiles[i].getName();
 					File source = new File(listofFiles[i].getPath());
 					File destination = new File(fileDest);
 					OutPut("size of file is: " + source.length());
-					//OutPut(destination);
 					Data_Mngr test = new Data_Mngr();
-					test.copyWithChannels(source, destination);//, false);
-					//test.copyWithStreams(source, destination, false);
-					//test.copyWithStreams(source, destination);
+					OutPut("This is in the multiple method: " + source.getPath());
+					test.copyWithChannels(source, destination);
 				}
 				else if(listofFiles[i].isDirectory())
 				{
 				
 					File newSource = new File(listofFiles[i].getPath());
 					File[] listOfFiles = newSource.listFiles();
-					String newDest = directory + listofFiles[i].getName() + "\\";
+					String newDest = directory + listofFiles[i].getName() + File.separator; /*File.pathSeparator*/;
 					new Data_Mngr(newSource, listOfFiles, newDest);
 					OutPut(newSource);
 					OutPut(newDest);
@@ -88,10 +87,10 @@ public final class Data_Mngr
 		    	try 
 		    	{
 			        inputChannel = new FileInputStream(aSourceFile).getChannel();
-			        OutPut("size of file in bytes is: " + inputChannel.size());
+			       // OutPut("size of file in bytes is: " + inputChannel.size());
 			        outputChannel = new FileOutputStream(aTargetFile).getChannel();
 			        outputChannel.transferFrom(inputChannel, 0, inputChannel.size());
-			        OutPut("size of file after transfer in byte: " + outputChannel.size());
+			       // OutPut("size of file after transfer in byte: " + outputChannel.size());
 		    	
 		    	}
 		    	finally 
