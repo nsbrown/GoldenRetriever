@@ -31,9 +31,9 @@ public class Backup
 		 	
 		 	*/
 		 
-		 	File folder = new File("C:\\Test1\\Test1.txt");
+		 	File folder = new File("C:\\Test1\\Test1.zip");
 			//File[] listofFiles = folder.listFiles();
-			String directory = "C:\\Test1\\Test1.zip";
+			String directory = "C:\\Test1\\";
 			
 			//backupItem newBackup = 
 			double start = System.nanoTime();
