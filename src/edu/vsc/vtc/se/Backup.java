@@ -1,21 +1,20 @@
 package edu.vsc.vtc.se;
 
-<<<<<<< HEAD
+
 import java.io.File; 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-=======
 import java.io.File;
 import java.io.IOException;
->>>>>>> origin/src
+
 
 public class Backup
 {
 	 public static void main(String [] aArgs) throws IOException
 	  {
-<<<<<<< HEAD
+
 		 	/**
 		 	 * is going to take an array of file sources to send sources to backupItem class
 		 	 * So needs to loop through array. or could be a list which ever is easier
@@ -54,16 +53,16 @@ public class Backup
 		 {
 			 
 		 }
-	 }
-}
-=======
+	 
+
+
 		 	File folder = new File("C:\\Test1");
 			File[] listofFiles = folder.listFiles();
 			String directory = "E:\\Test1\\";
 			
 			//backupItem newBackup = 
-			new backupItem(folder, listofFiles, directory);
+			//new backupItem(folder, listofFiles, directory);
 			
 	  }
 }
->>>>>>> origin/src
+
