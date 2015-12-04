@@ -15,7 +15,7 @@ import java.nio.channels.FileChannel;
 /** 
  Using FileChannels is usually faster than using streams.
 */
-public final class Data_Mngr 
+public class Data_Mngr 
 {
   
 	Data_Mngr()

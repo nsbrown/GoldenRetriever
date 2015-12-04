@@ -45,8 +45,10 @@ public class Compress
 	    		while(zipEntry != null)
 	    		{
 	    			File file = new File(aTargetFile + File.separator + zipEntry.getName());
-	    			fileOutputStream = new FileOutputStream(file);
 	    			destDirExists(file.getParentFile());
+	    			OutPut("The path of file: " + file.getPath());
+	    			fileOutputStream = new FileOutputStream(file);
+	    			
 	    			
 	    			byte[] buffer = new byte[2048];
 	    			int bufferRead;
@@ -125,6 +127,7 @@ public class Compress
 		  
 	 }
 
+	
 	  private void destDirExists(File targetDir) //If directory does not exist it creates it.
 	  {
 		  if(targetDir.exists() == false)
