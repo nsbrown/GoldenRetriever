@@ -45,8 +45,9 @@ public class Compress
 	    		while(zipEntry != null)
 	    		{
 	    			File file = new File(aTargetFile + File.separator + zipEntry.getName());
+	    			OutPut("The path of file Before make directory: " + file.getPath());
 	    			destDirExists(file.getParentFile());
-	    			OutPut("The path of file: " + file.getPath());
+	    			OutPut("The path of file After make directory: " + file.getPath());
 	    			fileOutputStream = new FileOutputStream(file);
 	    			
 	    			
