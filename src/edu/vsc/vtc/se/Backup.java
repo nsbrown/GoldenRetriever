@@ -39,7 +39,7 @@ public class Backup
 
 		 	File folder = new File("C:\\Test1\\TestFolder.zip");
 			//File[] listOfFiles = folder.listFiles();
-			String directory = "C:\\Test1";
+			String directory = "C:\\Test1\\";
 
 		 	//folder = new File("C:\\Test1\\Test1.zip");
 			//File[] listofFiles = folder.listFiles();

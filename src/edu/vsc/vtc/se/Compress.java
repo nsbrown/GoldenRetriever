@@ -27,7 +27,7 @@ public class Compress
 		OutPut("Decompressing Files.");
 		
 		File destinationFile = new File(aTargetFile);
-	    destDirExists(destinationFile.getParentFile());
+	    createPath(destinationFile.getParentFile());
 	    
 	    FileOutputStream fileOutputStream = null;
         ZipInputStream zipInputStream = null;
@@ -44,10 +44,17 @@ public class Compress
 	    		
 	    		while(zipEntry != null)
 	    		{
-	    			File file = new File(aTargetFile + File.separator + zipEntry.getName());
+	    			if(zipEntry.isDirectory())
+	    			{
+	    				OutPut("here");
+	    				createPath(new File(aTargetFile + File.separator + zipEntry.getName()));
+	    				zipEntry = zipInputStream.getNextEntry();
+	    			}
+	    			
+	    			File file = new File(aTargetFile + File.separator + zipEntry.getName()); //The path for out Directory
 	    			OutPut("The path of file Before make directory: " + file.getPath());
-	    			destDirExists(file.getParentFile());
-	    			OutPut("The path of file After make directory: " + file.getPath());
+	    			createPath(file.getParentFile()); //Creates the desired File 
+	    			
 	    			fileOutputStream = new FileOutputStream(file);
 	    			
 	    			
@@ -67,6 +74,7 @@ public class Compress
 	    		zipInputStream.close();
 	    	}
 	    }
+	    
 	    catch (FileNotFoundException ex)
 	    {
 	    	OutPut("File not found: " + ex);
@@ -78,7 +86,6 @@ public class Compress
 	  
 
 	}
-	
 	
 	
 	private void zip(File aSourceFile, String aTargetFile)//Borrowed Code - modified by Earl
@@ -129,7 +136,7 @@ public class Compress
 	 }
 
 	
-	  private void destDirExists(File targetDir) //If directory does not exist it creates it.
+	  private void createPath(File targetDir) //If directory does not exist it creates it.
 	  {
 		  if(targetDir.exists() == false)
 		  {
