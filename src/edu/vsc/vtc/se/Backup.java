@@ -16,9 +16,9 @@ public class Backup
 	 public static void main(String [] aArgs) throws IOException
 	  {
 
-		 	File folder = new File("C:\\Test1\\");
+		 	File folder = new File("C:\\Test\\");
 			File[] listOfFiles = folder.listFiles();
-			String directory = "C:\\"; //Testing" //+ File.separator;
+			String directory = "C:\\Test\\"; //Testing" //+ File.separator;
 		 	//String directory = fileExtentionChanger(folder);
 		 	//OutPut("Directory = " + directory);
 
@@ -28,9 +28,11 @@ public class Backup
 			
 			//backupItem newBackup = 
 			double start = System.nanoTime();
-			//new Compress(folder, directory);
-			fileExtentionChanger(folder, listOfFiles, directory );//listOfFiles, directory);
+			//new Compress(folder, listOfFiles, directory);
+			//fileExtentionChanger(folder, listOfFiles, directory );//listOfFiles, directory);
 			//new Data_Mngr(folder, listOfFiles, directory);
+			//new Compress(folder, directory);
+			new DeCompress(folder, directory);
 			
 			
 			//System.out.println("Time to Copy in seconds = " + ((System.nanoTime() - start))/1000000000);
@@ -69,12 +71,15 @@ public class Backup
 				else if(listOfFiles[i].isDirectory())
 				{
 				
-					//File newSource = new File(listOfFiles[i].getPath());
-					//File[] listofFiles = newSource.listFiles();
-					//String newDest = directory + listOfFiles[i].getName() + File.separator; /*File.pathSeparator*/;
+					File newSource = new File(listOfFiles[i].getPath());
+					File[] listofFiles = newSource.listFiles();
+					File parent = new File(listOfFiles[i].getParent());
+					OutPut("The Source: " + aSource);
+					String newDest = directory + parent.getName() + File.separator; /*File.pathSeparator - listOfFiles[i].getName()*/;
 					//new Data_Mngr(newSource, listOfFiles, newDest);
-					//OutPut(newSource);
-					//OutPut(newDest);
+					fileExtentionChanger(newSource,listofFiles,newDest);
+					OutPut(newSource);
+					OutPut(newDest);
 		
 				}
 			}

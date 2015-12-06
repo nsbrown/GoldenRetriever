@@ -4,9 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-
 import java.io.IOException;
-
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.channels.FileChannel;
@@ -54,8 +52,9 @@ public class Data_Mngr
 			{
 				if(listofFiles[i].isFile())
 				{
-					
-					String fileDest = directory + listofFiles[i].getName();
+					File parent = new File(listofFiles[i].getParent());
+					String fileDest = directory + parent.getName() + File.separator + listofFiles[i].getName();
+					//String fileDest = directory + listofFiles[i].getName();
 					File source = new File(listofFiles[i].getPath());
 					File destination = new File(fileDest);
 					OutPut("size of file is: " + source.length());
