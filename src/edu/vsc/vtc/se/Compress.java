@@ -5,20 +5,70 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 public class Compress 
 {
-	
-	Compress(File folder, String directory) 
+	public Compress(File folder, String directory) 
 	{
-		//unZip(folder, directory);
-		
+		zip(folder, directory);
 	}
 	
+	private void zip(File aSourceFile, String aTargetFile)//Borrowed Code - modified by Earl
+	  {
+		    OutPut("Compressing Files.");
+		    //destDirExists(aTargetFile.getParentFile());
+		    
+		    FileOutputStream fileOutputStream = null;
+            ZipOutputStream zipOutputStream = null;
+            FileInputStream fileInputStream = null;
+            ZipEntry zipEntry = null;
+            
+		    try
+		    {
+		    	try 
+		    	{
+		    		fileOutputStream = new FileOutputStream(aTargetFile);
+		    		zipOutputStream = new ZipOutputStream(fileOutputStream);
+		    		zipEntry = new ZipEntry(aSourceFile.getName());
+		    		zipOutputStream.putNextEntry(zipEntry);
+		    		fileInputStream = new FileInputStream(aSourceFile);
+		    		
+			        byte[] buffer = new byte[2048];
+			        int bufferRead;
+			        while((bufferRead = fileInputStream.read(buffer)) > 0)
+			        {
+			        	zipOutputStream.write(buffer, 0, bufferRead);
+			        }
+		    	
+		    	}
+		    	finally 
+		    	{
+		    		zipOutputStream.closeEntry();
+		   		    zipOutputStream.close();
+		            fileInputStream.close();
+		            fileOutputStream.close();
+		    	}
+		    }
+		    catch (FileNotFoundException ex)
+		    {
+		    	OutPut("File not found: " + ex);
+		    }
+		    catch (IOException ex)
+		    {
+		    	OutPut(ex);
+		    }
+		  
+	 }
+
+	
+	
+
+	/*
+	* This unzips files
+	*/
 	private void unZip(File aZipFile, String aTargetFile)
 	{
 		OutPut("Decompressing Files.");
@@ -84,52 +134,41 @@ public class Compress
 
 	}
 	
-	
-	private void fileZip(File aSourceFile, String aTargetFile)//Borrowed Code - modified by Earl
-	  {
-		    OutPut("Compressing Files.");
-		    //destDirExists(aTargetFile.getParentFile());
-		    
-		  FileOutputStream fileOutputStream = null;
-          ZipOutputStream zipOutputStream = null;
-          FileInputStream fileInputStream = null;
-          ZipEntry zipEntry = null;
-          
-		    try
-		    {
-		    	try 
-		    	{
-		    		fileOutputStream = new FileOutputStream(aTargetFile);
-		    		zipOutputStream = new ZipOutputStream(fileOutputStream);
-		    		zipEntry = new ZipEntry(aSourceFile.getName());
-		    		zipOutputStream.putNextEntry(zipEntry);
-		    		fileInputStream = new FileInputStream(aSourceFile);
-		    		
-			        byte[] buffer = new byte[2048];
-			        int bufferRead;
-			        while((bufferRead = fileInputStream.read(buffer)) > 0)
-			        {
-			        	zipOutputStream.write(buffer, 0, bufferRead);
-			        }
-		    	
-		    	}
-		    	finally 
-		    	{
-		    		zipOutputStream.closeEntry();
-		   		    zipOutputStream.close();
-		            fileInputStream.close();
-		            fileOutputStream.close();
-		    	}
-		    }
-		    catch (FileNotFoundException ex)
-		    {
-		    	OutPut("File not found: " + ex);
-		    }
-		    catch (IOException ex)
-		    {
-		    	OutPut(ex);
-		    }
-		  
+	 public static void fileExtentionChanger(File folder) //Borrowed: http://stackoverflow.com/questions/30187581/java-getting-file-name-without-extension-from-a-folder
+	 {													  //Modified by Earl
+	    
+	        File[] files = folder.listFiles();
+	        String fileName;
+	        int lastPeriodPos;
+	        if(files == null)
+	        {
+	        	OutPut("Folder is Empty and will be skipped");
+	        }
+	        if(files != null)
+	        {
+	        	for (int i = 0; i < files.length; i++) 
+	        	{
+		            if (files[i].isFile()) 
+		            {
+		                fileName = files[i].getPath();
+		                lastPeriodPos = fileName.lastIndexOf('.');
+		                if (lastPeriodPos > 0)
+		                fileName = fileName.substring(0, lastPeriodPos) + ".zip";
+		                testing(fileName);
+		                OutPut("File name Path" + fileName); 
+		            }
+		            else if(files[i].isDirectory())
+		            {
+		            	fileExtentionChanger(files[i]);
+		            }
+		        }
+	        }
+	        
+	        
+	    }
+	 public static void testing(String aTarget)
+	 {
+		  OutPut(aTarget);
 	 }
 	
 	  private void createPath(File targetDir) //If directory does not exist it creates it.
@@ -137,7 +176,6 @@ public class Compress
 		  if(targetDir.exists() == false)
 		  {
 			  targetDir.mkdirs();
-			  OutPut(targetDir.getPath());
 		  }
 	  }
 	  
