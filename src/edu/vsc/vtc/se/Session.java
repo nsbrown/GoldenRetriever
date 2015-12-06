@@ -4,9 +4,8 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Session {
-	public Session(ArrayList<File> sessionFiles, int sessionID) {
+	public Session(ArrayList<File> sessionFiles) {
 		_sessionFiles = sessionFiles;
-		_log = new File("../../../../logs/session" + sessionID + ".log");
 		repOK();
 	}
 	
