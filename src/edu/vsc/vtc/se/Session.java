@@ -4,13 +4,13 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Session {
-	public Session(ArrayList<Session_File> sessionFiles, int sessionID) {
+	public Session(ArrayList<File> sessionFiles, int sessionID) {
 		_sessionFiles = sessionFiles;
 		_log = new File("../../../../logs/session" + sessionID + ".log");
 		repOK();
 	}
 	
-	public ArrayList<Session_File> getSessionFiles() {
+	public ArrayList<File> getSessionFiles() {
 		return _sessionFiles;
 	}
 	
@@ -26,5 +26,5 @@ public class Session {
 	}
 	
 	private File _log; // never null
-	private ArrayList<Session_File> _sessionFiles; // never null
+	private ArrayList<File> _sessionFiles; // never null
 }

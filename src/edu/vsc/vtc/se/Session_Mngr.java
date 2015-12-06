@@ -15,8 +15,6 @@ public class Session_Mngr {
 	
 	private void repOK() {
 		for(int i = 0; i < _sessions.size(); i++) {
-			ArrayList<Session_File> sessionFiles = _sessions.get(i).getSessionFiles();
-			File singleFile = sessionFiles.get(i).getData();
 			assert _sessions.get(i) != null;
 		}
 	}
