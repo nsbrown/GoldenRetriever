@@ -21,7 +21,9 @@ public class Compress
 	 {													  //Modified by Earl
 	    
 	        File[] files = folder.listFiles();
+	        OutPut(folder.getName());
 	        String fileName = null;
+	        String newFileName = null;
 	        int lastPeriodPos;
 	        if(files == null)
 	        {
@@ -33,14 +35,20 @@ public class Compress
 	        	{
 		            if (files[i].isFile()) 
 		            {
-		                fileName = files[i].getPath();
+		               // fileName = files[i].getPath();
+		            	fileName = files[i].getName();
+		                OutPut("fileName: " + files[i].getName());
 		                lastPeriodPos = fileName.lastIndexOf('.');
 		                if (lastPeriodPos > 0)
-		                fileName = fileName.substring(0, lastPeriodPos) + ".zip";
-		                testing(fileName);
-		                OutPut("File name Path" + fileName); 
+		                newFileName = fileName.substring(0, lastPeriodPos) + ".zip";
+		                String newTarget = directory + folder.getName() + File.separator + newFileName;
+		              //  testing(fileName);
+		                OutPut("Current Target file: " + directory);
+		                OutPut("Source file: " + fileName);
+		                OutPut("Target file: " + newFileName); 
+		                OutPut("new destination" + newTarget);
 		               
-		                zip(folder, fileName);
+		                //zip(new File(fileName), newFileName);
 		            }
 		            else if(files[i].isDirectory())
 		            {
