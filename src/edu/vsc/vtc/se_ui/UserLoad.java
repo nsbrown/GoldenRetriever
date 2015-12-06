@@ -27,7 +27,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */ 
+ */
 package edu.vsc.vtc.se_ui;
 
 import java.io.*;
@@ -40,72 +40,62 @@ import javax.swing.filechooser.*;
 
 import edu.vsc.vtc.se.Session;
 
-public class UserLoad extends JPanel
-                             implements ActionListener {
-    static private final String newline = "\n";
-    JButton sessionButton, nextButton;
-    JTextArea log;
-    JFileChooser fc;
-    private Session selectedSession;
-    File defaultLogPath = new File(
-    		System.getProperty("user.home") + 
-			System.getProperty("file.separator")+ 
-			"Documents" + 
-			System.getProperty("file.separator")+
-			"Software" +
-			System.getProperty("file.separator")+
-			"backup_workspace" + 
-			System.getProperty("file.separator")+
-			"GoldenRetriever" + 
-			System.getProperty("file.separator")+
-			"log");
+public class UserLoad extends JPanel implements ActionListener {
+	static private final String newline = "\n";
+	JButton sessionButton, nextButton;
+	JTextArea log;
+	JFileChooser fc;
+	private Session selectedSession;
+	File defaultLogPath = new File(System.getProperty("user.home") + System.getProperty("file.separator") + "Documents"
+			+ System.getProperty("file.separator") + "Software" + System.getProperty("file.separator")
+			+ "backup_workspace" + System.getProperty("file.separator") + "GoldenRetriever"
+			+ System.getProperty("file.separator") + "log");
 
-    public UserLoad() {
-        super(new BorderLayout());
+	public UserLoad() {
+		super(new BorderLayout());
 
-        log = new JTextArea(5,20);
-        log.setMargin(new Insets(5,5,5,5));
-        log.setEditable(false);
-        JScrollPane logScrollPane = new JScrollPane(log);
-        
-        fc = new JFileChooser();
-        fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-        fc.setMultiSelectionEnabled(true);
-        fc.setCurrentDirectory(defaultLogPath);
-        
-        sessionButton = new JButton("Select a session");
-        sessionButton.addActionListener(this);
-        nextButton = new JButton("Next");
-        nextButton.addActionListener(this);
+		log = new JTextArea(5, 20);
+		log.setMargin(new Insets(5, 5, 5, 5));
+		log.setEditable(false);
+		JScrollPane logScrollPane = new JScrollPane(log);
 
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.add(sessionButton);
-        buttonPanel.add(nextButton);
-        
-        add(buttonPanel, BorderLayout.PAGE_START);
-        add(logScrollPane, BorderLayout.CENTER);
-    }
+		fc = new JFileChooser();
+		fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+		fc.setMultiSelectionEnabled(true);
+		fc.setCurrentDirectory(defaultLogPath);
 
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == sessionButton) {
-            int returnVal = fc.showOpenDialog(UserLoad.this);
+		sessionButton = new JButton("Select a session");
+		sessionButton.addActionListener(this);
+		nextButton = new JButton("Next");
+		nextButton.addActionListener(this);
 
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-            	// get session and display in log here.
-            } else {
-                log.append("No session selected" + newline);
-            }
-            log.setCaretPosition(log.getDocument().getLength());
-        }
-        else if (e.getSource() == nextButton) {
-        	// take the selected session to the UserBackupRestore page. 
-            JFrame frame = new JFrame("Backup or Restore");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            
-            frame.add(new UserBackupRestore(selectedSession));
-            
-            frame.pack();
-            frame.setVisible(true);
-        }
-    }
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.add(sessionButton);
+		buttonPanel.add(nextButton);
+
+		add(buttonPanel, BorderLayout.PAGE_START);
+		add(logScrollPane, BorderLayout.CENTER);
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == sessionButton) {
+			int returnVal = fc.showOpenDialog(UserLoad.this);
+
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				// get session and display in log here.
+			} else {
+				log.append("No session selected" + newline);
+			}
+			log.setCaretPosition(log.getDocument().getLength());
+		} else if (e.getSource() == nextButton) {
+			// take the selected session to the UserBackupRestore page.
+			JFrame frame = new JFrame("Backup or Restore");
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+			frame.add(new UserBackupRestore(selectedSession));
+
+			frame.pack();
+			frame.setVisible(true);
+		}
+	}
 }

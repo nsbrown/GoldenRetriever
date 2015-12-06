@@ -27,7 +27,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */ 
+ */
 package edu.vsc.vtc.se_ui;
 
 import java.io.*;
@@ -40,65 +40,62 @@ import javax.swing.filechooser.*;
 
 import edu.vsc.vtc.se.Session;
 
-public class UserCreate extends JPanel
-                             implements ActionListener {
-    static private final String newline = "\n";
-    JButton fileButton, nextButton;
-    JTextArea log;
-    JFileChooser fc;
-    private File[] FileSelections;
-    private Session currentSession;
+public class UserCreate extends JPanel implements ActionListener {
+	static private final String newline = "\n";
+	JButton fileButton, nextButton;
+	JTextArea log;
+	JFileChooser fc;
+	private File[] FileSelections;
+	private Session currentSession;
 
-    public UserCreate() {
-        super(new BorderLayout());
-        
-        log = new JTextArea(5,20);
-        log.setMargin(new Insets(5,5,5,5));
-        log.setEditable(false);
-        JScrollPane logScrollPane = new JScrollPane(log);
+	public UserCreate() {
+		super(new BorderLayout());
 
-        fc = new JFileChooser();
-        fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-        fc.setMultiSelectionEnabled(true);
+		log = new JTextArea(5, 20);
+		log.setMargin(new Insets(5, 5, 5, 5));
+		log.setEditable(false);
+		JScrollPane logScrollPane = new JScrollPane(log);
 
-        fileButton = new JButton("Select Files/Folders for session");
-        fileButton.addActionListener(this);
-        nextButton = new JButton("Next");
-        nextButton.addActionListener(this);
+		fc = new JFileChooser();
+		fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+		fc.setMultiSelectionEnabled(true);
 
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.add(fileButton);
-        buttonPanel.add(nextButton);
+		fileButton = new JButton("Select Files/Folders for session");
+		fileButton.addActionListener(this);
+		nextButton = new JButton("Next");
+		nextButton.addActionListener(this);
 
-        add(buttonPanel, BorderLayout.PAGE_START);
-        add(logScrollPane, BorderLayout.CENTER);
-    }
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.add(fileButton);
+		buttonPanel.add(nextButton);
 
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == fileButton) {
-            int returnVal = fc.showOpenDialog(UserCreate.this);
+		add(buttonPanel, BorderLayout.PAGE_START);
+		add(logScrollPane, BorderLayout.CENTER);
+	}
 
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-                FileSelections = fc.getSelectedFiles();
-                for(int i = 0; i <= FileSelections.length; i++)
-                {
-                	log.append(FileSelections[i].getPath() + " Selected." + newline);
-                }
-            } else {
-                log.append("No files selected." + newline);
-            }
-            log.setCaretPosition(log.getDocument().getLength());
-        }
-        else if (e.getSource() == nextButton) {
-        	currentSession = new Session(new ArrayList<File>(Arrays.asList(FileSelections)));
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == fileButton) {
+			int returnVal = fc.showOpenDialog(UserCreate.this);
 
-            JFrame frame = new JFrame("Backup or Restore");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				FileSelections = fc.getSelectedFiles();
+				for (int i = 0; i <= FileSelections.length; i++) {
+					log.append(FileSelections[i].getPath() + " Selected." + newline);
+				}
+			} else {
+				log.append("No files selected." + newline);
+			}
+			log.setCaretPosition(log.getDocument().getLength());
+		} else if (e.getSource() == nextButton) {
+			currentSession = new Session(new ArrayList<File>(Arrays.asList(FileSelections)));
 
-            frame.add(new UserBackupRestore(currentSession));
+			JFrame frame = new JFrame("Backup or Restore");
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-            frame.pack();
-            frame.setVisible(true);
-        }
-    }
+			frame.add(new UserBackupRestore(currentSession));
+
+			frame.pack();
+			frame.setVisible(true);
+		}
+	}
 }

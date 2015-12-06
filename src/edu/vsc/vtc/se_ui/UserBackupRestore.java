@@ -27,7 +27,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */ 
+ */
 package edu.vsc.vtc.se_ui;
 
 import java.io.*;
@@ -41,43 +41,41 @@ import javax.swing.filechooser.*;
 
 import edu.vsc.vtc.se.Session;
 
-public class UserBackupRestore extends JPanel
-                             implements ActionListener {
-    static private final String newline = "\n";
-    JButton backupButton, restoreButton;
-    JTextArea log;
-    private Session _currentSession;
+public class UserBackupRestore extends JPanel implements ActionListener {
+	static private final String newline = "\n";
+	JButton backupButton, restoreButton;
+	JTextArea log;
+	private Session _currentSession;
 
-    public UserBackupRestore(Session thisSession) {
-        super(new BorderLayout());
-        
-        _currentSession = thisSession;
+	public UserBackupRestore(Session thisSession) {
+		super(new BorderLayout());
 
-        log = new JTextArea(5,20);
-        log.setMargin(new Insets(5,5,5,5));
-        log.setEditable(false);
-        JScrollPane logScrollPane = new JScrollPane(log);
+		_currentSession = thisSession;
 
-        backupButton = new JButton("Backup now");
-        backupButton.addActionListener(this);
-        restoreButton = new JButton("Restore now");
-        restoreButton.addActionListener(this);
+		log = new JTextArea(5, 20);
+		log.setMargin(new Insets(5, 5, 5, 5));
+		log.setEditable(false);
+		JScrollPane logScrollPane = new JScrollPane(log);
 
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.add(backupButton);
-        buttonPanel.add(restoreButton);
+		backupButton = new JButton("Backup now");
+		backupButton.addActionListener(this);
+		restoreButton = new JButton("Restore now");
+		restoreButton.addActionListener(this);
 
-        add(buttonPanel, BorderLayout.PAGE_START);
-        add(logScrollPane, BorderLayout.CENTER);
-    }
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.add(backupButton);
+		buttonPanel.add(restoreButton);
 
-    public void actionPerformed(ActionEvent e) {
+		add(buttonPanel, BorderLayout.PAGE_START);
+		add(logScrollPane, BorderLayout.CENTER);
+	}
 
-        if (e.getSource() == backupButton) {
-            // call backup logic here.
-        }
-        else if (e.getSource() == restoreButton) {
-        	// call restore logic here.
-        }
-    }
+	public void actionPerformed(ActionEvent e) {
+
+		if (e.getSource() == backupButton) {
+			// call backup logic here.
+		} else if (e.getSource() == restoreButton) {
+			// call restore logic here.
+		}
+	}
 }
