@@ -26,6 +26,9 @@ public class Data_Mngr
 		
 		if(listofFiles != null)
 		{
+			OutPut("targetFile" + targetFile);
+			OutPut("new destination: " + targetFile + sourceFile.getName());
+			targetFile = targetFile + sourceFile.getName() + File.separator;
 			multipleFiles(listofFiles, targetFile);
 		}
 		if(listofFiles == null) //If a specific file from folder, this will be used to copy
@@ -52,25 +55,34 @@ public class Data_Mngr
 			{
 				if(listofFiles[i].isFile())
 				{
-					File parent = new File(listofFiles[i].getParent());
-					String fileDest = directory + parent.getName() + File.separator + listofFiles[i].getName();
-					//String fileDest = directory + listofFiles[i].getName();
+					
+					String fileDest = directory + File.separator + listofFiles[i].getName();
+					OutPut("filedest: " + fileDest);
 					File source = new File(listofFiles[i].getPath());
 					File destination = new File(fileDest);
-					OutPut("size of file is: " + source.length());
 					Data_Mngr test = new Data_Mngr();
-					OutPut("This is in the multiple method: " + source.getPath());
 					test.copyWithChannels(source, destination);
+					
+					//File parent = new File(listofFiles[i].getParent());
+					//String fileDest = directory + parent.getName() + File.separator + listofFiles[i].getName();
+					//String fileDest = directory + listofFiles[i].getName();
+					//OutPut("size of file is: " + source.length());
+					//OutPut("Source path: " + source.getPath());
+					//OutPut("Source: " + source);
+					//OutPut("Destination: " + destination);
+					
 				}
 				else if(listofFiles[i].isDirectory())
 				{
 				
 					File newSource = new File(listofFiles[i].getPath());
 					File[] listOfFiles = newSource.listFiles();
-					String newDest = directory + listofFiles[i].getName() + File.separator; /*File.pathSeparator*/;
-					new Data_Mngr(newSource, listOfFiles, newDest);
-					OutPut(newSource);
-					OutPut(newDest);
+					new Data_Mngr(newSource, listOfFiles, directory);
+					
+					//String newDest = directory + listofFiles[i].getName() + File.separator; /*File.pathSeparator*/;
+					
+					//OutPut(newSource);
+					//OutPut(newDest);
 		
 				}
 			}

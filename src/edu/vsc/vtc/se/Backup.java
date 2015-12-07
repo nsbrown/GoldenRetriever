@@ -16,7 +16,7 @@ public class Backup
 	 public static void main(String [] aArgs) throws IOException
 	  {
 
-		 	File folder = new File("C:\\Test\\");
+		 	File folder = new File("C:\\aTemp1\\");
 			File[] listOfFiles = folder.listFiles();
 			String directory = "C:\\Test\\"; //Testing" //+ File.separator;
 		 	//String directory = fileExtentionChanger(folder);
@@ -31,63 +31,14 @@ public class Backup
 			//new Compress(folder, listOfFiles, directory);
 			//fileExtentionChanger(folder, listOfFiles, directory );//listOfFiles, directory);
 			//new Data_Mngr(folder, listOfFiles, directory);
-			//new Compress(folder, directory);
-			new DeCompress(folder, directory);
+			//new Compress(folder, listOfFiles, directory);
+			new DeCompress(folder, listOfFiles, directory);
 			
 			
-			//System.out.println("Time to Copy in seconds = " + ((System.nanoTime() - start))/1000000000);
+			System.out.println("Time to Copy in seconds = " + ((System.nanoTime() - start))/1000000000);
 
 	  }
-	 public static void fileExtentionChanger(File aSource, File[] listOfFiles, String directory) //Borrowed: http://stackoverflow.com/questions/30187581/java-getting-file-name-without-extension-from-a-folder
-	 {													  //Modified by Earl
-		 int lastPeriodPos;
-		 String fileName = null;
-	     String newFileName = null;
-	     
-		 for(int i = 0; i < listOfFiles.length; i++)
-			{
-				if(listOfFiles[i].isFile())
-				{
-					//lastPeriodPos = .lastIndexOf('.');
-	                File parent = new File(listOfFiles[i].getParent());
-					String fileDest = directory + parent.getName() + File.separator + listOfFiles[i].getName();
-					OutPut("parent: " + listOfFiles[i].getParent());
-					OutPut("parents Name: " + parent.getName());
-					
-					lastPeriodPos = fileDest.lastIndexOf('.');
-					if (lastPeriodPos > 0)
-					{
-		                fileDest = fileDest.substring(0, lastPeriodPos) + ".zip";
-					}
-					File source = new File(listOfFiles[i].getPath());
-					File destination = new File(fileDest);
-					OutPut("source: " + source);
-					OutPut("destination: " + destination);
-					//OutPut("size of file is: " + source.length());
-					//Data_Mngr test = new Data_Mngr();
-					//OutPut("This is in the multiple method: " + source.getPath());
-					//test.copyWithChannels(source, destination);
-				}
-				else if(listOfFiles[i].isDirectory())
-				{
-				
-					File newSource = new File(listOfFiles[i].getPath());
-					File[] listofFiles = newSource.listFiles();
-					File parent = new File(listOfFiles[i].getParent());
-					OutPut("The Source: " + aSource);
-					String newDest = directory + parent.getName() + File.separator; /*File.pathSeparator - listOfFiles[i].getName()*/;
-					//new Data_Mngr(newSource, listOfFiles, newDest);
-					fileExtentionChanger(newSource,listofFiles,newDest);
-					OutPut(newSource);
-					OutPut(newDest);
-		
-				}
-			}
-	    }
-	  public static void testing(String aTarget)
-	  {
-		  OutPut(aTarget);
-	  }
+	 
 	  private static void createPath(File targetDir) //If directory does not exist it creates it.
 	  {
 		  if(targetDir.exists() == false)
