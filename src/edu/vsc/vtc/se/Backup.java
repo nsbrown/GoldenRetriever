@@ -14,34 +14,21 @@ import java.io.IOException;
 public class Backup
 {
 	
-	 public Backup(List<File> sources, String Destination, int flag)
+	 public Backup(Session session)
 	 {
-		 for(int i = 0; i < sources.size(); i++)
+		 for(int i = 0; i < session.getSessionFiles().size(); i++)
 		 {
-			 File sourceFile = sources.get(i);
-			 
-			 switch(flag)
-			 {
-				 case 0:
-				 {
-					 
-				 }
-				 break;
-				 case 1:
-				 {
-					 
-				 }
-				 break;
-				 case 2:
-				 {
-					 
-				 }
-				 break;
-				 default:
-				 {
-					 OutPut("Error");
-				 }
-				 break;
+			 OutPut("Backing up");
+			 File sourceFile = session.getSessionFiles().get(i);
+			 File[] listOfFiles = sourceFile.listFiles();
+			 if (session.getCompress()) {
+				 new Compress(sourceFile, listOfFiles, session.getDestination());
+			 }
+			 else if (session.getDecompress()) {
+				 new DeCompress(sourceFile, listOfFiles, session.getDestination());
+			 }
+			 else {
+				 new Data_Mngr(sourceFile, listOfFiles, session.getDestination());
 			 }
 		 }
 	 }

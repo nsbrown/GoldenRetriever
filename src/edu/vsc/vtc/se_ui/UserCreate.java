@@ -87,7 +87,7 @@ public class UserCreate extends JPanel implements ActionListener {
 			}
 			log.setCaretPosition(log.getDocument().getLength());
 		} else if (e.getSource() == nextButton) {
-			currentSession = new Session(new ArrayList<File>(Arrays.asList(FileSelections)));
+			currentSession = new Session(new ArrayList<File>(Arrays.asList(FileSelections)), System.getProperty("user.home") + System.getProperty("file.separator") + "Test2" + System.getProperty("file.separator"));
 
 			JFrame frame = new JFrame("Backup or Restore");
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

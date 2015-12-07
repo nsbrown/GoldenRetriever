@@ -39,6 +39,7 @@ import javax.swing.*;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.*;
 
+import edu.vsc.vtc.se.Backup;
 import edu.vsc.vtc.se.Session;
 
 public class UserBackupRestore extends JPanel implements ActionListener {
@@ -73,7 +74,8 @@ public class UserBackupRestore extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() == backupButton) {
-			// call backup logic here.
+			_currentSession.setDecompress(true);
+			new Backup(_currentSession);
 		} else if (e.getSource() == restoreButton) {
 			// call restore logic here.
 		}
