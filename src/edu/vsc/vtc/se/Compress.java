@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 public class Compress 
@@ -14,7 +13,7 @@ public class Compress
 
 	public Compress() 
 	{
-		// TODO Auto-generated constructor stub
+		
 	}
 	public Compress(File folder, File[] listOfFiles, String targetFile)
 	{
@@ -33,20 +32,13 @@ public class Compress
 	}
 
 	private void fileExtentionChanger(File[] listOfFiles, String directory) 
-	 {													  //Modified by Earl
+	 {													 
 		 int lastPeriodPos;
-		// String fileName = null;
-	    // String newFileName = null;
-	     
 		 for(int i = 0; i < listOfFiles.length; i++)
 			{
 				if(listOfFiles[i].isFile())
 				{
-					//lastPeriodPos = .lastIndexOf('.');
-	              //  File parent = new File(listOfFiles[i].getParent());
-					//String fileDest = directory + parent.getName() + File.separator + listOfFiles[i].getName();
-					//OutPut("parent: " + listOfFiles[i].getParent());
-				//	OutPut("parents Name: " + parent.getName());
+					
 					String fileDest = directory + File.separator + listOfFiles[i].getName();
 					File source = new File(listOfFiles[i].getPath());
 					lastPeriodPos = fileDest.lastIndexOf('.');
@@ -56,33 +48,13 @@ public class Compress
 					}
 					Compress test = new Compress();
 					test.zip(source, fileDest);
-					//File source = new File(listOfFiles[i].getPath());
-					//String destination = fileDest;
-					//OutPut("source: " + source);
-					//OutPut("destination: " + destination);
-					//Compress test = new Compress();
-					//OutPut("This is in the multiple method: " + source.getPath());
-					//test.zip(source, destination);
-					//OutPut("size of file is: " + source.length());
-					//Data_Mngr test = new Data_Mngr();
-					//OutPut("This is in the multiple method: " + source.getPath());
-					//test.copyWithChannels(source, destination);
+					
 				}
 				else if(listOfFiles[i].isDirectory())
 				{
 					File newSource = new File(listOfFiles[i].getPath());
 					File[] listofFiles = newSource.listFiles();
-					//File parent = new File(listOfFiles[i].getParent());
 					new Compress(newSource, listofFiles, directory);
-					//OutPut("The Source: " + folder);
-					//String newDest = directory + parent.getName() + File.separator; /*File.pathSeparator - listOfFiles[i].getName()*/;
-					//File newSource = new File(listOfFiles[i].getPath());
-					//File[] listofFiles = newSource.listFiles();
-					//String newDest = directory + listOfFiles[i].getName() + File.separator; /*File.pathSeparator*/;
-					//new Data_Mngr(newSource, listOfFiles, newDest);
-					//fileExtentionChanger(newSource,listofFiles,newDest);
-					//OutPut(newSource);
-					//OutPut(newDest);
 		
 				}
 			}
@@ -95,16 +67,13 @@ public class Compress
 		    OutPut("Compressing Files.");
 		    OutPut("aSourceFile: " + aSourceFile);
 		    OutPut("aTargetFile: " + aTargetFile);
-		    destDirExists(new File(aTargetFile).getParentFile());
-		    //destDirExists(aTargetFile.getParentFile());
+		    createPath(new File(aTargetFile).getParentFile());
 		    
 		    FileOutputStream fileOutputStream = null;
             ZipOutputStream zipOutputStream = null;
             FileInputStream fileInputStream = null;
             ZipEntry zipEntry = null;
             
-            for(int i = 0; i < 4; i++)
-            {
 		    try
 		    {
 		    	try 
@@ -139,11 +108,11 @@ public class Compress
 		    {
 		    	OutPut(ex);
 		    }
-            }//Delete
+           
 	 }
 
 	
-	  private void destDirExists(File targetDir) //If directory does not exist it creates it.
+	  private void createPath(File targetDir) //If directory does not exist it creates it.
 	  {
 		  if(targetDir.exists() == false)
 		  {
