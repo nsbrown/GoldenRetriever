@@ -31,7 +31,7 @@ public class Compress {
 		} else {
 			OutPut(folder.getParent());
 			OutPut(targetFile);
-			String fileDest = targetFile + File.separator + folder.getName();
+			String fileDest = targetFile + folder.getName();
 			int lastPeriodPos = fileDest.lastIndexOf('.');
 			OutPut("last period index = " + lastPeriodPos);
 			if (lastPeriodPos > 0) {
