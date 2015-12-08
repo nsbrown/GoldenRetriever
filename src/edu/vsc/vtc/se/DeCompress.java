@@ -3,7 +3,23 @@ package edu.vsc.vtc.se;
 import java.io.*;
 import java.util.zip.*;
 
+/**
+ * DeCompress - Handles the Decompressing of the given directories/Files
+ * 
+ * @author Earl Bombard
+ *
+ */
 public class DeCompress {
+	/**
+	 * Initializes the restoring of directories/Files that are compressed.
+	 * 
+	 * @param aZipFile
+	 *            The zip source File or source directory to be copied.
+	 * @param listOfFiles
+	 * 			  The list of files within a directory - if null directory is empty.
+	 * @param aTargetFile
+	 * 			  The destination path for the copies to be stored. Will be created if not existing.
+	 */
 	public DeCompress(File aZipFile, File[] listOfFiles, String aTargetFile) {
 
 		if (listOfFiles != null) {

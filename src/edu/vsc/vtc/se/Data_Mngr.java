@@ -4,14 +4,26 @@ import java.io.*;
 import java.nio.channels.FileChannel;
 
 /**
- * Using FileChannels is usually faster than using streams.
+ * Data_Mngr - Handles the Non-compressing backup of the given directories/Files
+ * 
+ * @author Earl Bombard
+ *
  */
 public class Data_Mngr {
 
 	public Data_Mngr() {
 
 	}
-
+	/**
+	 * Initializes the copying of directories/Files using channels(For a backup or restore).
+	 * 
+	 * @param sourceFile
+	 *            The source File or source directory to be copied.
+	 * @param listofFiles
+	 * 			  The list of files within a directory - if null directory is empty.
+	 * @param targetFile
+	 * 			  The destination path for the copies to be stored. Will be created if not existing.
+	 */
 	public Data_Mngr(File sourceFile, File[] listofFiles, String targetFile) {
 
 		if (listofFiles != null) {
@@ -29,6 +41,14 @@ public class Data_Mngr {
 		OutPut("Done.");
 	}
 
+	/**
+	 * copying of a sing specific files.
+	 * 
+	 * @param folder
+	 *            The source File or source directory to be copied.
+	 * @param directory
+	 * 			  The list of files within a directory - if null directory is empty.
+	 */
 	private static void singleFile(File folder, String directory) {
 		File dir = new File(directory + folder.getName());
 		Data_Mngr test = new Data_Mngr();
@@ -39,7 +59,7 @@ public class Data_Mngr {
 		for (int i = 0; i < listofFiles.length; i++) {
 			if (listofFiles[i].isFile()) {
 
-				String fileDest = directory + listofFiles[i].getName();
+				String fileDest = directory + File.separator + listofFiles[i].getName();
 				File source = new File(listofFiles[i].getPath());
 				File destination = new File(fileDest);
 				Data_Mngr test = new Data_Mngr();

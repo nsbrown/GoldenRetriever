@@ -3,12 +3,27 @@ package edu.vsc.vtc.se;
 import java.io.*;
 import java.util.zip.*;
 
+/**
+ * Compress - Handles the compressing of the given directories/Files
+ * 
+ * @author Earl Bombard
+ *
+ */
 public class Compress {
 
 	public Compress() {
 
 	}
-
+	/**
+	 * Initializes the copying of directories/Files using Compression
+	 * 
+	 * @param folder
+	 *            The source File or source directory to be copied.
+	 * @param listOfFiles
+	 * 			  The list of files within a directory - if null directory is empty.
+	 * @param targetFile
+	 * 			  The destination path for the copies to be stored. Will be created if not existing.
+	 */
 	public Compress(File folder, File[] listOfFiles, String targetFile) {
 		if (listOfFiles != null) {
 			targetFile = targetFile + folder.getName() + File.separator;
@@ -18,20 +33,32 @@ public class Compress {
 			OutPut(targetFile);
 			String fileDest = targetFile + File.separator + folder.getName();
 			int lastPeriodPos = fileDest.lastIndexOf('.');
+			OutPut("last period index = " + lastPeriodPos);
 			if (lastPeriodPos > 0) {
-				fileDest = fileDest.substring(0,  lastPeriodPos) + ".zip";
+				fileDest = fileDest.substring(0, lastPeriodPos) + ".zip";
 			}
+			OutPut("new target: " + fileDest);
 			zip(folder, fileDest);
 		}
 
 	}
 
+	/**
+	 * Initializes the copying of directories/Files using channels
+	 * 
+	 * @param sourceFile
+	 *            The source File or source directory to be copied.
+	 * @param listofFiles
+	 * 			  The list of files within a directory - if null directory is empty.
+	 * @param targetFile
+	 * 			  The destination path for the copies to be stored. Will be created if not existing.
+	 */
 	private void fileExtentionChanger(File[] listOfFiles, String directory) {
 		int lastPeriodPos;
 		for (int i = 0; i < listOfFiles.length; i++) {
 			if (listOfFiles[i].isFile()) {
 
-				String fileDest = directory + listOfFiles[i].getName();
+				String fileDest = directory + File.separator + listOfFiles[i].getName();
 				File source = new File(listOfFiles[i].getPath());
 				lastPeriodPos = fileDest.lastIndexOf('.');
 				if (lastPeriodPos > 0) {
