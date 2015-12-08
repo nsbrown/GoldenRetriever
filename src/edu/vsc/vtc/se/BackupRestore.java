@@ -1,6 +1,6 @@
 /**
- * BackupRestore.java 
- * Copyright 2015, Nathan S. Brown & Earl Bombard
+ * BackupRestore.java  
+ * Copyright 2015, Nathan S. Brown & Earl W. Bombard
  * all rights reserved
  */
 package edu.vsc.vtc.se;

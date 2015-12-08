@@ -1,16 +1,13 @@
 /**
- * UserHome.java
+ * UserHome.java 
  * Copyright 2015, Nathan S. Brown
  * all rights reserved
  */
 package edu.vsc.vtc.se_ui;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.BorderLayout; 
 import java.awt.event.*;
 import javax.swing.*;
-
-import com.sun.javafx.tk.Toolkit;
 
 /**
  * UserHome - Draws UI for the landing page.
