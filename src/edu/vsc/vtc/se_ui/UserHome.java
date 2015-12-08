@@ -6,8 +6,11 @@
 package edu.vsc.vtc.se_ui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.*;
 import javax.swing.*;
+
+import com.sun.javafx.tk.Toolkit;
 
 /**
  * UserHome - Draws UI for the landing page.
@@ -28,7 +31,6 @@ public class UserHome extends JPanel implements ActionListener {
 		_createButton.addActionListener(this);
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.add(_createButton);
-
 		add(buttonPanel, BorderLayout.PAGE_START);
 	}
 

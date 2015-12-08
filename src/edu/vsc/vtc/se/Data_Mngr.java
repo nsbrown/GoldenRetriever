@@ -39,7 +39,7 @@ public class Data_Mngr {
 		for (int i = 0; i < listofFiles.length; i++) {
 			if (listofFiles[i].isFile()) {
 
-				String fileDest = directory + File.separator + listofFiles[i].getName();
+				String fileDest = directory + listofFiles[i].getName();
 				File source = new File(listofFiles[i].getPath());
 				File destination = new File(fileDest);
 				Data_Mngr test = new Data_Mngr();

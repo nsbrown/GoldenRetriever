@@ -26,7 +26,7 @@ public class Compress {
 		for (int i = 0; i < listOfFiles.length; i++) {
 			if (listOfFiles[i].isFile()) {
 
-				String fileDest = directory + File.separator + listOfFiles[i].getName();
+				String fileDest = directory + listOfFiles[i].getName();
 				File source = new File(listOfFiles[i].getPath());
 				lastPeriodPos = fileDest.lastIndexOf('.');
 				if (lastPeriodPos > 0) {
