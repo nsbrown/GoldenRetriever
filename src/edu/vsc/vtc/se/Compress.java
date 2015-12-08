@@ -16,7 +16,12 @@ public class Compress {
 		} else {
 			OutPut(folder.getParent());
 			OutPut(targetFile);
-			zip(folder, targetFile);
+			String fileDest = targetFile + File.separator + folder.getName();
+			int lastPeriodPos = fileDest.lastIndexOf('.');
+			if (lastPeriodPos > 0) {
+				fileDest = fileDest.substring(0,  lastPeriodPos) + ".zip";
+			}
+			zip(folder, fileDest);
 		}
 
 	}
