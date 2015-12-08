@@ -1,77 +1,99 @@
+/**
+ * Session.java 
+ * Copyright 2015, Nathan S. Brown
+ * all rights reserved
+ */
 package edu.vsc.vtc.se;
 
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * Session - A session for backing up or restoring.
+ * 
+ * @author Nathan S. Brown
+ *
+ */
 public class Session {
-	public Session(ArrayList<File> sessionFiles, String destination) {
+
+	/**
+	 * Creates a new session for backing up or restoring.
+	 * 
+	 * @param sessionFiles
+	 *            the files and paths sent in to be worked on.
+	 * @param destination
+	 *            the folder to be copied to.
+	 */
+	public Session(ArrayList<File> sessionFiles, File destination) {
 		_sessionFiles = sessionFiles;
-		_destination = destination;
-		_sessionID++;
-		_log = new File(System.getProperty("user.home") + System.getProperty("file.separator") + "Documents"
-				+ System.getProperty("file.separator") + "Software" + System.getProperty("file.separator")
-				+ "backup_workspace" + System.getProperty("file.separator") + "GoldenRetriever"
-				+ System.getProperty("file.separator") + "log" + System.getProperty("file.separator") + "session"
-				+ _sessionID + ".txt");
-		try {
-			_log.createNewFile();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		_destination = destination.getPath();
 		repOK();
 	}
 
+	/**
+	 * @return the files and paths sent in to be worked on.
+	 */
 	public ArrayList<File> getSessionFiles() {
 		return _sessionFiles;
 	}
 
-	public File getLog() {
-		return _log;
-	}
-	
+	/**
+	 * @return the folder to be copied to.
+	 */
 	public String getDestination() {
 		return _destination;
 	}
-	
-	public void setCompress(boolean isCompress)
-	{
+
+	/**
+	 * @param isCompress
+	 *            sets compression to true or false.
+	 */
+	public void setCompress(boolean isCompress) {
 		_isCompress = isCompress;
 	}
-	
-	public boolean getCompress()
-	{
+
+	/**
+	 * @return the compression flag.
+	 */
+	public boolean getCompress() {
 		return _isCompress;
 	}
-	
-	public void setDecompress(boolean isDecompress)
-	{
+
+	/**
+	 * @param isDecompress
+	 *            sets decompression to true or false.
+	 */
+	public void setDecompress(boolean isDecompress) {
 		_isDecompress = isDecompress;
 	}
-	
-	public boolean getDecompress()
-	{
+
+	/**
+	 * @return the decompression flag.
+	 */
+	public boolean getDecompress() {
 		return _isDecompress;
 	}
 
+	/**
+	 * repOK for object creation validation.
+	 */
 	private void repOK() {
+		assert _sessionFiles != null;
 		for (int i = 0; i < _sessionFiles.size(); i++) {
 			assert _sessionFiles.get(i) != null;
 		}
-		assert _log != null;
 		assert _destination != null;
 		if (_isCompress) {
 			assert _isDecompress == false;
-		}
-		else if (_isDecompress) {
+		} else if (_isDecompress) {
 			assert _isCompress == false;
 		}
 	}
 
-	private String _destination;
-	private boolean _isCompress = false;
-	private boolean _isDecompress = false;
-	private int _sessionID;
-	private File _log; // never null
+	private String _destination; // never null
+	private boolean _isCompress = false; // Must be false if _isDecompress is
+											// true
+	private boolean _isDecompress = false; // Must be false if _isCompress is
+											// true
 	private ArrayList<File> _sessionFiles; // never null
 }

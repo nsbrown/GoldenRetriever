@@ -1,47 +1,45 @@
+/**
+ * UserHome.java
+ * Copyright 2015, Nathan S. Brown
+ * all rights reserved
+ */
 package edu.vsc.vtc.se_ui;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.awt.event.*;
+import javax.swing.*;
 
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.border.EmptyBorder;
-
-import edu.vsc.vtc.se.Session;
-
+/**
+ * UserHome - Draws UI for the landing page.
+ * 
+ * @author Nathan S. Brown
+ *
+ */
 public class UserHome extends JPanel implements ActionListener {
-	static private final String newline = "\n";
-	JButton createButton, loadButton;
+	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Initialize the UserHome UI. Creates all tools needed on page.
+	 */
 	public UserHome() {
 		super(new BorderLayout());
 
-		createButton = new JButton("Create a new session");
-		createButton.addActionListener(this);
-		loadButton = new JButton("Load a session");
-		loadButton.addActionListener(this);
-
+		_createButton = new JButton("Create a new session");
+		_createButton.addActionListener(this);
 		JPanel buttonPanel = new JPanel();
-		buttonPanel.add(createButton);
-		buttonPanel.add(loadButton);
+		buttonPanel.add(_createButton);
 
 		add(buttonPanel, BorderLayout.PAGE_START);
 	}
 
+	/**
+	 * Event handler function for button presses.
+	 * 
+	 * @param e
+	 *            the triggered event.
+	 */
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == createButton) {
+		if (e.getSource() == _createButton) {
 			JFrame frame = new JFrame("Create a session");
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -49,17 +47,15 @@ public class UserHome extends JPanel implements ActionListener {
 
 			frame.pack();
 			frame.setVisible(true);
-		} else if (e.getSource() == loadButton) {
-			JFrame frame = new JFrame("Saved sessions");
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-			frame.add(new UserLoad());
-
-			frame.pack();
-			frame.setVisible(true);
 		}
 	}
 
+	/**
+	 * Main function for UI initialization.
+	 * 
+	 * @param args
+	 *            arguments passed in (if any).
+	 */
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -76,4 +72,8 @@ public class UserHome extends JPanel implements ActionListener {
 		});
 	}
 
+	/**
+	 * Rep variables.
+	 */
+	private JButton _createButton;
 }

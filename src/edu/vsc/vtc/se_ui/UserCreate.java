@@ -1,101 +1,114 @@
-/*
- * Copyright (c) 1995, 2008, Oracle and/or its affiliates. All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
- *
- *   - Neither the name of Oracle or the names of its
- *     contributors may be used to endorse or promote products derived
- *     from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
- * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+/**
+ * UserCreate.java
+ * Copyright 2015, Nathan S. Brown
+ * all rights reserved
  */
 package edu.vsc.vtc.se_ui;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.filechooser.*;
-
 import edu.vsc.vtc.se.Session;
 
+/**
+ * UserCreate - Draws UI for creating a session.
+ * 
+ * @author Nathan S. Brown
+ *
+ */
 public class UserCreate extends JPanel implements ActionListener {
-	static private final String newline = "\n";
-	JButton fileButton, nextButton;
-	JTextArea log;
-	JFileChooser fc;
-	private File[] FileSelections;
-	private Session currentSession;
+	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Initialize the UserCreate UI. Creates all tools needed on page.
+	 */
 	public UserCreate() {
 		super(new BorderLayout());
 
-		log = new JTextArea(5, 20);
-		log.setMargin(new Insets(5, 5, 5, 5));
-		log.setEditable(false);
-		JScrollPane logScrollPane = new JScrollPane(log);
+		_log = new JTextArea(5, 20);
+		_log.setMargin(new Insets(5, 5, 5, 5));
+		_log.setEditable(false);
+		JScrollPane logScrollPane = new JScrollPane(_log);
 
-		fc = new JFileChooser();
-		fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-		fc.setMultiSelectionEnabled(true);
+		_fc = new JFileChooser();
+		_fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+		_fc.setMultiSelectionEnabled(true);
 
-		fileButton = new JButton("Select Files/Folders for session");
-		fileButton.addActionListener(this);
-		nextButton = new JButton("Next");
-		nextButton.addActionListener(this);
+		_dc = new JFileChooser();
+		_dc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+		_fileButton = new JButton("Select Files/Folders for session");
+		_fileButton.addActionListener(this);
+		_destButton = new JButton("Select a Destination folder");
+		_destButton.addActionListener(this);
+		_nextButton = new JButton("Next");
+		_nextButton.addActionListener(this);
 
 		JPanel buttonPanel = new JPanel();
-		buttonPanel.add(fileButton);
-		buttonPanel.add(nextButton);
+		buttonPanel.add(_fileButton);
+		buttonPanel.add(_destButton);
+		buttonPanel.add(_nextButton);
 
 		add(buttonPanel, BorderLayout.PAGE_START);
 		add(logScrollPane, BorderLayout.CENTER);
 	}
 
+	/**
+	 * Event handler function for button presses.
+	 * 
+	 * @param e
+	 *            the triggered event.
+	 */
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == fileButton) {
-			int returnVal = fc.showOpenDialog(UserCreate.this);
+		if (e.getSource() == _fileButton) {
+			int returnVal = _fc.showOpenDialog(UserCreate.this);
 
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
-				FileSelections = fc.getSelectedFiles();
-				for (int i = 0; i <= FileSelections.length; i++) {
-					log.append(FileSelections[i].getPath() + " Selected." + newline);
+				_fileSelections = _fc.getSelectedFiles();
+				for (int i = 0; i <= _fileSelections.length; i++) {
+					_log.append(_fileSelections[i].getPath() + " added to session." + _newline);
 				}
 			} else {
-				log.append("No files selected." + newline);
+				_log.append("No files selected." + _newline);
 			}
-			log.setCaretPosition(log.getDocument().getLength());
-		} else if (e.getSource() == nextButton) {
-			currentSession = new Session(new ArrayList<File>(Arrays.asList(FileSelections)), System.getProperty("user.home") + System.getProperty("file.separator") + "Test2" + System.getProperty("file.separator"));
+			_log.setCaretPosition(_log.getDocument().getLength());
+		} else if (e.getSource() == _nextButton) {
+			if (_destination != null || _fileSelections != null) {
+				_currentSession = new Session(new ArrayList<File>(Arrays.asList(_fileSelections)), _destination);
 
-			JFrame frame = new JFrame("Backup or Restore");
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				JFrame frame = new JFrame("Compression");
+				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-			frame.add(new UserBackupRestore(currentSession));
+				frame.add(new UserCompress(_currentSession));
 
-			frame.pack();
-			frame.setVisible(true);
+				frame.pack();
+				frame.setVisible(true);
+			} else {
+				_log.append("Please select files for session and/or destination folder");
+			}
+		} else if (e.getSource() == _destButton) {
+			int returnVal = _dc.showOpenDialog(UserCreate.this);
+
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				_destination = _dc.getSelectedFile();
+				_log.append("DESTINATION FOLDER: " + _destination.getPath() + _newline);
+			} else {
+				_log.append("No destination selected." + _newline);
+			}
 		}
 	}
+
+	/**
+	 * Rep variables.
+	 */
+	static private final String _newline = "\n";
+	private JButton _fileButton, _destButton, _nextButton;
+	private JTextArea _log;
+	private JFileChooser _fc;
+	private JFileChooser _dc;
+	private File[] _fileSelections;
+	private File _destination;
+	private Session _currentSession;
 }
